@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RemoteSiteSetting xmlns="http://soap.sforce.com/2006/04/metadata">
+    <disableProtocolSecurity>false</disableProtocolSecurity>
+    <isActive>true</isActive>
+    <url>https://flow-e8b62da6-cd4d-4c27-9c69-a6ba6fb8486e-atba6q.2oyih5-1.usa-e1.cloudhub.io</url>
+</RemoteSiteSetting>

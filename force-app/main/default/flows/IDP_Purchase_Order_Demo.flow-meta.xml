@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <decisions>
+        <name>Exception_Found</name>
+        <label>Exception Found?</label>
+        <locationX>182</locationX>
+        <locationY>587</locationY>
+        <defaultConnector>
+            <targetReference>Order_Creation</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Exception</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Extraction.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Exception</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Match_Quotes</targetReference>
+            </connector>
+            <label>Exception</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Order_Successful</name>
+        <label>Order Successful</label>
+        <locationX>182</locationX>
+        <locationY>995</locationY>
+        <defaultConnector>
+            <targetReference>Order_Fulfillment</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Order_Exception</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Extraction.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>True</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Order_Create_Exception</targetReference>
+            </connector>
+            <label>Order Exception</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <description>Is is manual or via Partner Manager</description>
+        <name>PO_Type</name>
+        <label>PO Type</label>
+        <locationX>182</locationX>
+        <locationY>287</locationY>
+        <defaultConnector>
+            <targetReference>Extraction</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Manual PO</defaultConnectorLabel>
+        <rules>
+            <name>Automated</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <operator>None</operator>
+            </conditions>
+            <connector>
+                <targetReference>Exception_Found</targetReference>
+            </connector>
+            <label>Automated</label>
+        </rules>
+    </decisions>
+    <description>Demo to showcase IDP and Flow Orchestration with Purchase Orders</description>
+    <environments>Default</environments>
+    <interviewLabel>IDP Purchase Order Demo {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>IDP Purchase Order Demo</label>
+    <orchestratedStages>
+        <name>Close_Order</name>
+        <label>Close Order</label>
+        <locationX>182</locationX>
+        <locationY>1619</locationY>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Complete_PO</name>
+            <actionName>IDP_Complete_PO_Process</actionName>
+            <actionType>stepBackground</actionType>
+            <entryConditionLogic>and</entryConditionLogic>
+            <label>Complete PO</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <description>Content Extraction</description>
+        <name>Extraction</name>
+        <label>PO Extraction</label>
+        <locationX>270</locationX>
+        <locationY>395</locationY>
+        <connector>
+            <targetReference>Exception_Found</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Extract_Attachments</name>
+            <actionName>IDP_ReadPOFromFile</actionName>
+            <actionType>stepBackground</actionType>
+            <entryConditionLogic>and</entryConditionLogic>
+            <label>Extract Attachments</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+        <stageSteps>
+            <name>Validate_Output</name>
+            <actionName>IDP_Validate_Output</actionName>
+            <actionType>stepBackground</actionType>
+            <entryConditionLogic>and</entryConditionLogic>
+            <label>Validate Output</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Invoicing</name>
+        <label>Invoicing</label>
+        <locationX>182</locationX>
+        <locationY>1403</locationY>
+        <connector>
+            <targetReference>Payment_Processing</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Generate_Invoice</name>
+            <actionName>InvocableFlowCreateSalesOrderFlow221.invoke</actionName>
+            <actionType>stepMuleSoft</actionType>
+            <entryConditionLogic>and</entryConditionLogic>
+            <label>Send Invoice</label>
+            <requiresAsyncProcessing>true</requiresAsyncProcessing>
+            <stepSubtype>MuleSoftStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Match_Quotes</name>
+        <label>PO Exception</label>
+        <locationX>50</locationX>
+        <locationY>695</locationY>
+        <connector>
+            <targetReference>Order_Creation</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Route_to_Partner_Ops</name>
+            <actionName>IDP_Quote_Exception</actionName>
+            <actionType>stepInteractive</actionType>
+            <assignees>
+                <assignee>
+                    <stringValue>jbalaji+dfdemo@salesforce.com</stringValue>
+                </assignee>
+                <assigneeType>User</assigneeType>
+            </assignees>
+            <entryConditionLogic>and</entryConditionLogic>
+            <inputParameters>
+                <name>ActionInput__RecordId</name>
+                <value>
+                    <elementReference>$Record.Id</elementReference>
+                </value>
+            </inputParameters>
+            <label>Route to Partner Ops</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <stepSubtype>InteractiveStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Order_Create_Exception</name>
+        <label>Order Exception</label>
+        <locationX>50</locationX>
+        <locationY>1103</locationY>
+        <connector>
+            <targetReference>Order_Fulfillment</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Route_Partner_Ops</name>
+            <actionName>IDP_Order_Exception</actionName>
+            <actionType>stepInteractive</actionType>
+            <assignees>
+                <assignee>
+                    <stringValue>jbalaji+dfdemo@salesforce.com</stringValue>
+                </assignee>
+                <assigneeType>User</assigneeType>
+            </assignees>
+            <entryConditionLogic>and</entryConditionLogic>
+            <inputParameters>
+                <name>ActionInput__RecordId</name>
+                <value>
+                    <elementReference>$Record.Id</elementReference>
+                </value>
+            </inputParameters>
+            <label>Route to Partner Ops</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <stepSubtype>InteractiveStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Order_Creation</name>
+        <label>Order Creation</label>
+        <locationX>182</locationX>
+        <locationY>887</locationY>
+        <connector>
+            <targetReference>Order_Successful</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Convert_Opportunity</name>
+            <actionName>IDP_Convert_Oppty</actionName>
+            <actionType>stepBackground</actionType>
+            <entryConditionLogic>and</entryConditionLogic>
+            <label>Convert Opportunity</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+        <stageSteps>
+            <name>Create_Order_in_SAP</name>
+            <actionName>InvocableFlowCreateSalesOrderNetsuite.invoke</actionName>
+            <actionType>stepMuleSoft</actionType>
+            <entryConditionLogic>and</entryConditionLogic>
+            <label>Create Order in SAP</label>
+            <requiresAsyncProcessing>true</requiresAsyncProcessing>
+            <stepSubtype>MuleSoftStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Order_Fulfillment</name>
+        <label>Order Fulfillment</label>
+        <locationX>182</locationX>
+        <locationY>1295</locationY>
+        <connector>
+            <targetReference>Invoicing</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Check_Inventory</name>
+            <actionName>ComposerFlow.invoke</actionName>
+            <actionType>stepMuleSoft</actionType>
+            <entryConditionLogic>and</entryConditionLogic>
+            <label>Check Inventory</label>
+            <requiresAsyncProcessing>true</requiresAsyncProcessing>
+            <stepSubtype>MuleSoftStep</stepSubtype>
+        </stageSteps>
+        <stageSteps>
+            <name>Approve_Inventory</name>
+            <actionName>IDP_Inventory_Exception</actionName>
+            <actionType>stepInteractive</actionType>
+            <assignees>
+                <assignee>
+                    <stringValue>jbalaji+dfdemo@salesforce.com</stringValue>
+                </assignee>
+                <assigneeType>User</assigneeType>
+            </assignees>
+            <entryConditionLogic>and</entryConditionLogic>
+            <inputParameters>
+                <name>ActionInput__RecordId</name>
+                <value>
+                    <elementReference>$Record.Id</elementReference>
+                </value>
+            </inputParameters>
+            <label>Approve Inventory Exception</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <stepSubtype>InteractiveStep</stepSubtype>
+        </stageSteps>
+        <stageSteps>
+            <description>Continue with Inventory exceptions</description>
+            <name>Manage_Inventory</name>
+            <actionName>InvocableFlowCreateSalesOrderFlow221.invoke</actionName>
+            <actionType>stepMuleSoft</actionType>
+            <entryConditionLogic>and</entryConditionLogic>
+            <label>Manage Inventory</label>
+            <requiresAsyncProcessing>true</requiresAsyncProcessing>
+            <stepSubtype>MuleSoftStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <orchestratedStages>
+        <name>Payment_Processing</name>
+        <label>Payment Processing</label>
+        <locationX>182</locationX>
+        <locationY>1511</locationY>
+        <connector>
+            <targetReference>Close_Order</targetReference>
+        </connector>
+        <exitConditionLogic>and</exitConditionLogic>
+        <stageSteps>
+            <name>Process_Payments</name>
+            <actionName>IDP_Process_Payment</actionName>
+            <actionType>stepBackground</actionType>
+            <entryConditionLogic>and</entryConditionLogic>
+            <label>Process Payments</label>
+            <requiresAsyncProcessing>false</requiresAsyncProcessing>
+            <stepSubtype>BackgroundStep</stepSubtype>
+        </stageSteps>
+    </orchestratedStages>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>Orchestrator</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>PO_Type</targetReference>
+        </connector>
+        <object>Contact</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>InvalidDraft</status>
+</Flow>

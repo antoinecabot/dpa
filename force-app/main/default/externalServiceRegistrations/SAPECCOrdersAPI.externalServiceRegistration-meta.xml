@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>MuleSoft SAP ECC Orders sAPI 1.0.0 - Order API to submit sales orders for the ecc erp system</description>
+    <label>SAPECCOrdersAPI</label>
+    <namedCredentialReference>SAP_Orders_API</namedCredentialReference>
+    <operations>
+        <active>true</active>
+        <name>getorder</name>
+    </operations>
+    <operations>
+        <active>true</active>
+        <name>postorder</name>
+    </operations>
+    <providerAssetEndpoint>7da77cff-6f39-4a02-aa39-3c997e8a125c:7da77cff-6f39-4a02-aa39-3c997e8a125c:sap-ecc-orders-sapi:1.0.0</providerAssetEndpoint>
+    <registrationProviderType>MuleSoft</registrationProviderType>
+    <schema>{
+  &quot;swagger&quot;: &quot;2.0&quot;,
+  &quot;info&quot;: {
+    &quot;title&quot;: &quot;SAP Orders API&quot;,
+    &quot;version&quot;: &quot;v1&quot;
+  },
+  &quot;schemes&quot;: [
+    &quot;http&quot;
+  ],
+  &quot;paths&quot;: {
+    &quot;/order&quot;: {
+      &quot;post&quot;: {
+        &quot;consumes&quot;: [
+          &quot;application/json&quot;
+        ],
+        &quot;produces&quot;: [
+          &quot;application/json&quot;
+        ],
+        &quot;parameters&quot;: [
+          {
+            &quot;x-amf-mediaType&quot;: &quot;application/json&quot;,
+            &quot;in&quot;: &quot;body&quot;,
+            &quot;name&quot;: &quot;generated&quot;,
+            &quot;schema&quot;: {
+              &quot;$ref&quot;: &quot;#/definitions/OrderDataType&quot;
+            }
+          }
+        ],
+        &quot;responses&quot;: {
+          &quot;201&quot;: {
+            &quot;description&quot;: &quot;&quot;,
+            &quot;x-amf-mediaType&quot;: &quot;application/json&quot;,
+            &quot;schema&quot;: {
+              &quot;example&quot;: {
+                &quot;strict&quot;: true,
+                &quot;value&quot;: {
+                  &quot;SALESDOCUMENT&quot;: &quot;0000075061&quot;
+                }
+              },
+              &quot;type&quot;: &quot;object&quot;,
+              &quot;required&quot;: [
+                &quot;SALESDOCUMENT&quot;
+              ],
+              &quot;properties&quot;: {
+                &quot;SALESDOCUMENT&quot;: {
+                  &quot;example&quot;: &quot;0000075052&quot;,
+                  &quot;type&quot;: &quot;string&quot;
+                }
+              }
+            }
+          }
+        }
+      },
+      &quot;get&quot;: {
+        &quot;produces&quot;: [
+          &quot;application/json&quot;
+        ],
+        &quot;responses&quot;: {
+          &quot;200&quot;: {
+            &quot;description&quot;: &quot;&quot;,
+            &quot;x-amf-mediaType&quot;: &quot;application/json&quot;,
+            &quot;schema&quot;: {
+              &quot;example&quot;: {
+                &quot;strict&quot;: true,
+                &quot;value&quot;: {
+                  &quot;0&quot;: {
+                    &quot;orderNo&quot;: &quot;2039182&quot;,
+                    &quot;orderType&quot;: &quot;StdOrder&quot;,
+                    &quot;sold-to-party&quot;: &quot;00000123&quot;,
+                    &quot;shipt-to-party&quot;: &quot;0002391&quot;,
+                    &quot;material&quot;: &quot;derGerät&quot;,
+                    &quot;qty&quot;: &quot;1&quot;
+                  }
+                }
+              },
+              &quot;type&quot;: &quot;object&quot;
+            }
+          }
+        }
+      }
+    }
+  },
+  &quot;definitions&quot;: {
+    &quot;OrderDataType&quot;: {
+      &quot;type&quot;: &quot;object&quot;,
+      &quot;required&quot;: [
+        &quot;SALES_ORG&quot;,
+        &quot;DISTR_CHAN&quot;,
+        &quot;DIVISION&quot;,
+        &quot;PURCH_NO&quot;,
+        &quot;MATERIAL&quot;,
+        &quot;PLANT&quot;,
+        &quot;TARGET_QTY&quot;,
+        &quot;CUSTOMER&quot;
+      ],
+      &quot;properties&quot;: {
+        &quot;SALES_ORG&quot;: {
+          &quot;example&quot;: &quot;3000&quot;,
+          &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;DISTR_CHAN&quot;: {
+          &quot;example&quot;: &quot;10&quot;,
+          &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;DIVISION&quot;: {
+          &quot;example&quot;: &quot;00&quot;,
+          &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;PURCH_NO&quot;: {
+          &quot;example&quot;: &quot;9191919&quot;,
+          &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;MATERIAL&quot;: {
+          &quot;example&quot;: &quot;MULETEST0&quot;,
+          &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;PLANT&quot;: {
+          &quot;example&quot;: &quot;3000&quot;,
+          &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;TARGET_QTY&quot;: {
+          &quot;example&quot;: &quot;1&quot;,
+          &quot;type&quot;: &quot;string&quot;
+        },
+        &quot;CUSTOMER&quot;: {
+          &quot;example&quot;: &quot;0000000007&quot;,
+          &quot;type&quot;: &quot;string&quot;
+        }
+      }
+    }
+  }
+}
+</schema>
+    <schemaType>OpenApi</schemaType>
+    <serviceBinding>{&quot;host&quot;:null,&quot;basePath&quot;:null,&quot;allowedSchemes&quot;:[&quot;HTTP&quot;],&quot;requestMediaTypes&quot;:[],&quot;responseMediaTypes&quot;:[],&quot;compatibleMediaTypes&quot;:{}}</serviceBinding>
+    <status>Complete</status>
+    <systemVersion>4</systemVersion>
+</ExternalServiceRegistration>

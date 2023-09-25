@@ -1,0 +1,39 @@
+{
+  "appPageId" : "6ec50c18-3bf4-4eb8-af02-f4908dc04de7",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "4fe452dd-8cf3-4933-b68c-af1bd850dd7a",
+  "label" : "Vehicle Related List",
+  "regions" : [ {
+    "id" : "884fe322-bb60-4f67-931f-cbaee088706a",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customTitle" : "",
+        "parentRecordId" : "{!recordId}",
+        "relatedListName" : "{!relationshipApiName}",
+        "showBreadCrumbs" : true,
+        "showCustomTitle" : false,
+        "showManualRefreshButton" : true,
+        "showRowNumbers" : true
+      },
+      "componentName" : "forceCommunity:relatedList",
+      "id" : "89f56ba9-c57d-44bf-994d-77736e64bdd1",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "c98d5e4f-1734-444a-bd46-56fcfbd481f1",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "6c566467-2ee3-42fc-b7e1-7e192132c249",
+    "regionName" : "footer",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "relatedlist-a00"
+}

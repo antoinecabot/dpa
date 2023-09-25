@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowDefinition xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This orchestration is used for a Digital Process Automation demo for Forrester (DF23)</description>
+    <masterLabel>DPA - Vehicle Purchase Orchestration</masterLabel>
+</FlowDefinition>

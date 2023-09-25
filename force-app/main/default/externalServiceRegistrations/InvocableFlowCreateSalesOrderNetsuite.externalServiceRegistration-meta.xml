@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>MuleSoft Invocable Flow - Create Sales Order in Netsuite 1.0.0</description>
+    <label>InvocableFlowCreateSalesOrderNetsuite</label>
+    <namedCredentialReference>Composer_Netsuite_Order_Flow</namedCredentialReference>
+    <operations>
+        <active>true</active>
+        <name>invoke</name>
+    </operations>
+    <providerAssetEndpoint>7da77cff-6f39-4a02-aa39-3c997e8a125c:7da77cff-6f39-4a02-aa39-3c997e8a125c:invocable-flow-create-sales-order-in-netsuite:1.0.0</providerAssetEndpoint>
+    <registrationProviderType>MuleSoft</registrationProviderType>
+    <schema>{
+  &quot;openapi&quot;: &quot;3.0.3&quot;,
+  &quot;info&quot;: {
+    &quot;title&quot;: &quot;Invocable Flow - Create Salesorder in NetSuite&quot;,
+    &quot;description&quot;: &quot;&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;
+  },
+  &quot;paths&quot;: {
+    &quot;/&quot;: {
+      &quot;post&quot;: {
+        &quot;operationId&quot;: &quot;invoke&quot;,
+        &quot;summary&quot;: &quot;Calling this endpoint will invoke the composer flow.&quot;,
+        &quot;requestBody&quot;: {
+          &quot;content&quot;: {
+            &quot;application/json&quot;: {
+              &quot;schema&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                  &quot;orderId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;description&quot;: &quot;&quot;
+                  },
+                  &quot;Enddate&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;description&quot;: &quot;&quot;,
+                    &quot;format&quot;: &quot;date-time&quot;
+                  },
+                  &quot;Startdate&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;description&quot;: &quot;&quot;,
+                    &quot;format&quot;: &quot;date-time&quot;
+                  },
+                  &quot;itemId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;description&quot;: &quot;&quot;
+                  },
+                  &quot;Name&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;description&quot;: &quot;&quot;
+                  },
+                  &quot;accountInternalId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;description&quot;: &quot;&quot;
+                  },
+                  &quot;memo&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;description&quot;: &quot;&quot;
+                  }
+                },
+                &quot;x-sample-value&quot;: {
+                  &quot;orderId&quot;: &quot;123456&quot;,
+                  &quot;Enddate&quot;: &quot;2023-08-17T10:00:00.000Z&quot;,
+                  &quot;Startdate&quot;: &quot;2023-08-20T10:00:00.000Z&quot;,
+                  &quot;itemId&quot;: &quot;10373&quot;,
+                  &quot;Name&quot;: &quot;My Sales Order&quot;,
+                  &quot;accountInternalId&quot;: &quot;694866&quot;,
+                  &quot;memo&quot;: &quot;This is my test memo&quot;
+                }
+              }
+            }
+          }
+        },
+        &quot;responses&quot;: {
+          &quot;200&quot;: {
+            &quot;description&quot;: &quot;Success&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;object&quot;,
+                  &quot;nullable&quot;: true
+                }
+              }
+            }
+          },
+          &quot;500&quot;: {
+            &quot;description&quot;: &quot;Error&quot;,
+            &quot;headers&quot;: {
+              &quot;x-correlation-id&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;description&quot;: &quot;auto generated request id&quot;
+              }
+            },
+            &quot;content&quot;: {
+              &quot;text/plain&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                }
+              },
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;object&quot;,
+                  &quot;properties&quot;: {
+                    &quot;requestId&quot;: {
+                      &quot;type&quot;: &quot;string&quot;,
+                      &quot;description&quot;: &quot;auto generated unique request id&quot;
+                    },
+                    &quot;errorDescription&quot;: {
+                      &quot;type&quot;: &quot;string&quot;,
+                      &quot;description&quot;: &quot;error description&quot;
+                    },
+                    &quot;errorType&quot;: {
+                      &quot;type&quot;: &quot;string&quot;,
+                      &quot;description&quot;: &quot;error type code&quot;
+                    }
+                  }
+                }
+              }
+            }
+          },
+          &quot;502&quot;: {
+            &quot;description&quot;: &quot;Bad Gateway&quot;,
+            &quot;headers&quot;: {
+              &quot;x-correlation-id&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;description&quot;: &quot;unique request id&quot;
+              }
+            }
+          },
+          &quot;503&quot;: {
+            &quot;description&quot;: &quot;Service Unavailable&quot;,
+            &quot;headers&quot;: {
+              &quot;x-correlation-id&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;description&quot;: &quot;unique request id&quot;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}</schema>
+    <schemaType>OpenApi3</schemaType>
+    <serviceBinding>{&quot;host&quot;:&quot;&quot;,&quot;basePath&quot;:&quot;/&quot;,&quot;allowedSchemes&quot;:[],&quot;requestMediaTypes&quot;:[],&quot;responseMediaTypes&quot;:[],&quot;compatibleMediaTypes&quot;:{}}</serviceBinding>
+    <status>Complete</status>
+    <systemVersion>4</systemVersion>
+</ExternalServiceRegistration>

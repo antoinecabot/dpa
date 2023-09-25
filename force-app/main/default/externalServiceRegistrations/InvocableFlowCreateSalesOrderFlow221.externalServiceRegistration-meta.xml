@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExternalServiceRegistration xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>MuleSoft Invocable Flow - Create Sales Order in Netsuite 2.2.1</description>
+    <label>InvocableFlowCreateSalesOrderFlow221</label>
+    <namedCredentialReference>Composer_Netsuite_Order_Flow</namedCredentialReference>
+    <operations>
+        <active>true</active>
+        <name>invoke</name>
+    </operations>
+    <providerAssetEndpoint>7da77cff-6f39-4a02-aa39-3c997e8a125c:7da77cff-6f39-4a02-aa39-3c997e8a125c:invocable-flow-create-sales-order-in-netsuite:2.2.1</providerAssetEndpoint>
+    <registrationProviderType>MuleSoft</registrationProviderType>
+    <schema>{
+  &quot;openapi&quot;: &quot;3.0.3&quot;,
+  &quot;info&quot;: {
+    &quot;title&quot;: &quot;imported Create or Update NetSuite Sales Order for Associated Activated Order in Salesforce&quot;,
+    &quot;description&quot;: &quot;&quot;,
+    &quot;version&quot;: &quot;1.0.0&quot;
+  },
+  &quot;servers&quot;: [
+    {
+      &quot;url&quot;: &quot;https://flow-057f60f8-fb85-4119-8727-8e5eb74d0cba-l2kdk5.2oyih5-1.usa-e1.cloudhub.io&quot;
+    }
+  ],
+  &quot;components&quot;: {
+    &quot;securitySchemes&quot;: {
+      &quot;basicAuth&quot;: {
+        &quot;type&quot;: &quot;http&quot;,
+        &quot;scheme&quot;: &quot;basic&quot;
+      }
+    }
+  },
+  &quot;security&quot;: [
+    {
+      &quot;basicAuth&quot;: []
+    }
+  ],
+  &quot;paths&quot;: {
+    &quot;/&quot;: {
+      &quot;post&quot;: {
+        &quot;operationId&quot;: &quot;invoke&quot;,
+        &quot;summary&quot;: &quot;Calling this endpoint will invoke the composer flow.&quot;,
+        &quot;requestBody&quot;: {
+          &quot;content&quot;: {
+            &quot;application/json&quot;: {
+              &quot;schema&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                  &quot;vehicleId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                  },
+                  &quot;Enddate&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;format&quot;: &quot;date-time&quot;
+                  },
+                  &quot;Startdate&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                    &quot;format&quot;: &quot;date-time&quot;
+                  },
+                  &quot;itemId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                  },
+                  &quot;Name&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                  },
+                  &quot;accountInternalId&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                  },
+                  &quot;memo&quot;: {
+                    &quot;type&quot;: &quot;string&quot;
+                  }
+                },
+                &quot;x-sample-value&quot;: {
+                  &quot;vehicleId&quot;: &quot;123456X123&quot;,
+                  &quot;Enddate&quot;: &quot;2023-08-17T10:00:00.000Z&quot;,
+                  &quot;Startdate&quot;: &quot;2023-08-20T10:00:00.000Z&quot;,
+                  &quot;itemId&quot;: &quot;10373&quot;,
+                  &quot;Name&quot;: &quot;My Sales Order&quot;,
+                  &quot;accountInternalId&quot;: &quot;694866&quot;,
+                  &quot;memo&quot;: &quot;This is my test memo&quot;
+                }
+              }
+            }
+          }
+        },
+        &quot;responses&quot;: {
+          &quot;200&quot;: {
+            &quot;description&quot;: &quot;Success&quot;,
+            &quot;content&quot;: {
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;object&quot;,
+                  &quot;nullable&quot;: true
+                }
+              }
+            }
+          },
+          &quot;500&quot;: {
+            &quot;description&quot;: &quot;Error&quot;,
+            &quot;headers&quot;: {
+              &quot;x-correlation-id&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;description&quot;: &quot;auto generated request id&quot;
+              }
+            },
+            &quot;content&quot;: {
+              &quot;text/plain&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                }
+              },
+              &quot;application/json&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;object&quot;,
+                  &quot;properties&quot;: {
+                    &quot;requestId&quot;: {
+                      &quot;type&quot;: &quot;string&quot;,
+                      &quot;description&quot;: &quot;auto generated unique request id&quot;
+                    },
+                    &quot;errorDescription&quot;: {
+                      &quot;type&quot;: &quot;string&quot;,
+                      &quot;description&quot;: &quot;error description&quot;
+                    },
+                    &quot;errorType&quot;: {
+                      &quot;type&quot;: &quot;string&quot;,
+                      &quot;description&quot;: &quot;error type code&quot;
+                    }
+                  }
+                }
+              }
+            }
+          },
+          &quot;502&quot;: {
+            &quot;description&quot;: &quot;Bad Gateway&quot;,
+            &quot;headers&quot;: {
+              &quot;x-correlation-id&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;description&quot;: &quot;unique request id&quot;
+              }
+            }
+          },
+          &quot;503&quot;: {
+            &quot;description&quot;: &quot;Service Unavailable&quot;,
+            &quot;headers&quot;: {
+              &quot;x-correlation-id&quot;: {
+                &quot;schema&quot;: {
+                  &quot;type&quot;: &quot;string&quot;
+                },
+                &quot;description&quot;: &quot;unique request id&quot;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}</schema>
+    <schemaType>OpenApi3</schemaType>
+    <serviceBinding>{&quot;host&quot;:&quot;flow-057f60f8-fb85-4119-8727-8e5eb74d0cba-l2kdk5.2oyih5-1.usa-e1.cloudhub.io&quot;,&quot;basePath&quot;:&quot;&quot;,&quot;allowedSchemes&quot;:[&quot;HTTPS&quot;],&quot;requestMediaTypes&quot;:[],&quot;responseMediaTypes&quot;:[],&quot;compatibleMediaTypes&quot;:{}}</serviceBinding>
+    <status>Complete</status>
+    <systemVersion>4</systemVersion>
+</ExternalServiceRegistration>
